@@ -1,54 +1,53 @@
-#include <iostream>
-#include <string>
-#include <ctime>
+ <!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>Engineer Auth System</title>
+    <style>
+        body { background-color: #0d1117; color: white; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        .card { background: #161b22; padding: 40px; border-radius: 15px; text-align: center; border: 1px solid #30363d; }
+        button { background: #238636; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; }
+    </style>
+</head>
+<body>
 
-using namespace std;
+    <div class="card">
+        <h1 style="color: #58a6ff;">Engineer Auth System</h1>
+        <p>اضغط لبدء التسجيل (لديك 10 ثوانٍ فقط)</p>
+        <button onclick="startProcess()">Start System</button>
+        <div id="result" style="margin-top: 20px; white-space: pre-wrap;"></div>
+    </div>
 
-/**
- * نظام التحقق الهندسي الذكي
- * هذا الكود يختبر سرعة استجابة المستخدم وهويته الهندسية
- */
+    <script>
+        function startProcess() {
+            // بداية الوقت
+            let startTime = Date.now();
 
-int main() {
-    string name;
-    int age;
-    const int CURRENT_YEAR = 2026;
+            // إدخال البيانات (بديل cin)
+            let name = prompt("Enter your name:");
+            let age = prompt("Enter your age:");
 
-    cout << "========================================" << endl;
-    cout << "   ENGINEERING AUTHENTICATION SYSTEM    " << endl;
-    cout << "   TIME LIMIT: 10 SECONDS               " << endl;
-    cout << "========================================" << endl;
+            // نهاية الوقت
+            let endTime = Date.now();
+            let timeTaken = Math.floor((endTime - startTime) / 1000);
 
-    // بداية التوقيت
-    long long start_time = time(0);
+            let resultDiv = document.getElementById("result");
+            let output = "--- Result ---\nTime taken: " + timeTaken + " seconds\n";
 
-    cout << ">> Enter Name: ";
-    cin >> name;
+            // منطقك الخاص بالـ 10 ثوانٍ والعمر
+            if (timeTaken > 10) {
+                output += "You were too slow!";
+            } else {
+                if (parseInt(age) >= 20) {
+                    output += "hello eng : " + name;
+                } else {
+                    output += "go out please " + name;
+                }
+            }
 
-    cout << ">> Enter Age: ";
-    cin >> age;
-
-    // نهاية التوقيت
-    long long end_time = time(0);
-    int duration = end_time - start_time;
-
-    cout << "\n[System] Analyzing data..." << endl;
-    cout << "[System] Time taken: " << duration << "s" << endl;
-
-    // اختبار السرعة
-    if (duration > 10) {
-        cout << "\n❌ ACCESS DENIED: Response too slow for an engineer!" << endl;
-    } else {
-        if (age == 20) {
-            cout << "\n✅ Hello Eng: " << name << " [Rank: Junior]" << endl;
-        } else if (age > 20) {
-            cout << "\n✅ Welcome Eng: " << name << " [Rank: Senior]" << endl;
-            cout << ">> Experience Level: " << (age - 20) << " years." << endl;
-        } else {
-            cout << "\n⚠️ Sorry " << name << ", this system is for engineers 20+." << endl;
+            resultDiv.innerText = output;
         }
-    }
+    </script>
 
-    cout << "========================================" << endl;
-    return 0;
-}
+</body>
+</html>
