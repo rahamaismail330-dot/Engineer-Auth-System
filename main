@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Engineer Auth System</title>
+</head>
+
+<body>
+
+<h2>Engineer System</h2>
+
+<input type="text" id="name" placeholder="Enter your name">
+<br><br>
+
+<input type="number" id="age" placeholder="Enter your age">
+<br><br>
+
+<button onclick="checkUser()">Submit</button>
+
+<h3 id="result"></h3>
+
+<script>
+
+let startTime = Date.now();
+
+function checkUser() {
+
+    let endTime = Date.now();
+
+    let timeTaken = (endTime - startTime) / 1000;
+
+    let name = document.getElementById("name").value;
+    let age = parseInt(document.getElementById("age").value);
+
+    let result = "";
+
+    if(timeTaken > 10){
+        result = "You were too slow!";
+    }
+    else{
+
+        if(age >= 20){
+            result = "hello eng : " + name;
+        }
+
+        else{
+            result = "go out please " + name;
+        }
+    }
+
+    document.getElementById("result").innerHTML = result;
+}
+
+</script>
+
+</body>
+</html>
