@@ -80,7 +80,7 @@
             border-radius: 8px;
             background: #0f172a;
             white-space: pre-wrap;
-            display: none; /* Hidden until results are ready */
+            display: none;
             border-left: 4px solid var(--primary-blue);
         }
     </style>
@@ -89,7 +89,7 @@
 
     <div class="card">
         <h1>Engineer Auth</h1>
-        <p>You have <strong>10 seconds</strong> to complete registration.</p>
+        <p>You have <strong>90 seconds</strong> to complete registration.</p>
         
         <div id="timer">Ready?</div>
         
@@ -123,6 +123,7 @@
             
             resultDiv.style.display = "block";
 
+            // تم تغيير الوقت إلى 90 ثانية
             if (timeTaken > 90) {
                 resultDiv.style.borderLeftColor = "var(--error-red)";
                 output += "❌ Access Denied: Too slow!";
