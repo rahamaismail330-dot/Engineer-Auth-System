@@ -1,94 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Engineer Auth System</title>
-
-  <style>
-    body{
-      font-family: Arial;
-      background:#0f172a;
-      color:white;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      height:100vh;
-      margin:0;
-    }
-
-    .box{
-      text-align:center;
-      padding:40px;
-      border-radius:15px;
-      background:#1e293b;
-      box-shadow:0 0 20px rgba(0,0,0,0.4);
-    }
-
-    h1{
-      color:#38bdf8;
-    }
-  </style>
-</head>
-
-<body>
-
-<div class="box">
-  <h1>Engineer Auth System </h1>
-  <p>The project is now live on Vercel</p>
-</div>
-
-</body>
-</html>
-
- <!DOCTYPE html>
-<html lang="ar">
-<head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Engineer Auth System</title>
     <style>
-        body { background-color: #0d1117; color: white; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-        .card { background: #161b22; padding: 40px; border-radius: 15px; text-align: center; border: 1px solid #30363d; }
-        button { background: #238636; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --primary-blue: #38bdf8;
+            --success-green: #22c55e;
+            --error-red: #ef4444;
+            --text-main: #f8fafc;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            text-align: center;
+            padding: 40px;
+            border-radius: 16px;
+            background: var(--card-bg);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border: 1px solid #334155;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        h1 {
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+
+        #timer {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--primary-blue);
+        }
+
+        button {
+            background: var(--success-green);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        button:hover {
+            background: #16a34a;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        #result {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 8px;
+            background: #0f172a;
+            white-space: pre-wrap;
+            display: none; /* Hidden until results are ready */
+            border-left: 4px solid var(--primary-blue);
+        }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <h1 style="color: #58a6ff;">Engineer Auth System</h1>
-        <p>اضغط لبدء التسجيل (لديك 10 ثوانٍ فقط)</p>
-        <button onclick="startProcess()">Start System</button>
-        <div id="result" style="margin-top: 20px; white-space: pre-wrap;"></div>
+        <h1>Engineer Auth</h1>
+        <p>You have <strong>10 seconds</strong> to complete registration.</p>
+        
+        <div id="timer">Ready?</div>
+        
+        <button id="startBtn" onclick="startProcess()">Start System</button>
+
+        <div id="result"></div>
     </div>
 
     <script>
         function startProcess() {
-            // بداية الوقت
-            let startTime = Date.now();
+            const resultDiv = document.getElementById("result");
+            const timerDiv = document.getElementById("timer");
+            const startBtn = document.getElementById("startBtn");
 
-            // إدخال البيانات (بديل cin)
+            // Reset UI
+            resultDiv.style.display = "none";
+            startBtn.disabled = true;
+            startBtn.style.opacity = "0.5";
+
+            let startTime = Date.now();
+            
+            // Logic for inputs
             let name = prompt("Enter your name:");
             let age = prompt("Enter your age:");
 
-            // نهاية الوقت
             let endTime = Date.now();
             let timeTaken = Math.floor((endTime - startTime) / 1000);
 
-            let resultDiv = document.getElementById("result");
-            let output = "--- Result ---\nTime taken: " + timeTaken + " seconds\n";
+            // Calculate Result
+            let output = `--- Status ---\nTime: ${timeTaken}s\n`;
+            
+            resultDiv.style.display = "block";
 
-            // منطقك الخاص بالـ 10 ثوانٍ والعمر
             if (timeTaken > 10) {
-                output += "You were too slow!";
+                resultDiv.style.borderLeftColor = "var(--error-red)";
+                output += "❌ Access Denied: Too slow!";
+            } else if (!name || !age) {
+                resultDiv.style.borderLeftColor = "var(--error-red)";
+                output += "⚠️ Error: Missing information.";
             } else {
                 if (parseInt(age) >= 20) {
-                    output += "hello eng : " + name;
+                    resultDiv.style.borderLeftColor = "var(--success-green)";
+                    output += `Welcome, Engineer ${name}! 🛠️`;
                 } else {
-                    output += "go out please " + name;
+                    resultDiv.style.borderLeftColor = "var(--error-red)";
+                    output += `Access Denied: ${name}, you are too young.`;
                 }
             }
 
             resultDiv.innerText = output;
+            timerDiv.innerText = "Process Complete";
+            
+            // Re-enable button
+            startBtn.disabled = false;
+            startBtn.style.opacity = "1";
         }
     </script>
 
