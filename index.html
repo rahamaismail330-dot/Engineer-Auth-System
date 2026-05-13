@@ -7,203 +7,196 @@
 <title>Engineer Auth System</title>
 
 <style>
-    :root {
-        --bg-color: #020617;
-        --card-bg: rgba(15, 23, 42, 0.9);
-        --primary-blue: #38bdf8;
-        --success-green: #22c55e;
-        --error-red: #ef4444;
-        --text-main: #f8fafc;
-        --input-bg: #0f172a;
+
+:root{
+    --bg-color:#020617;
+    --card-bg:rgba(15,23,42,0.92);
+    --primary-blue:#38bdf8;
+    --success-green:#22c55e;
+    --error-red:#ef4444;
+    --text-main:#f8fafc;
+    --input-bg:#0f172a;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    background:radial-gradient(circle at top,#0f172a 0%,#020617 70%);
+    color:var(--text-main);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+    overflow:hidden;
+}
+
+body::before{
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    background:rgba(56,189,248,0.08);
+    filter:blur(120px);
+    border-radius:50%;
+    top:-100px;
+    right:-100px;
+}
+
+.card{
+    position:relative;
+    z-index:10;
+    width:100%;
+    max-width:420px;
+    padding:35px;
+    border-radius:20px;
+    background:var(--card-bg);
+    border:1px solid rgba(56,189,248,0.2);
+    backdrop-filter:blur(10px);
+    box-shadow:
+        0 0 30px rgba(56,189,248,0.15),
+        0 10px 40px rgba(0,0,0,0.6);
+    animation:fadeIn .7s ease;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(20px);
     }
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+h1{
+    text-align:center;
+    color:var(--primary-blue);
+    margin-bottom:10px;
+    text-shadow:0 0 10px rgba(56,189,248,0.5);
+}
+
+.subtitle{
+    text-align:center;
+    color:#94a3b8;
+    margin-bottom:25px;
+    line-height:1.6;
+}
+
+.terminal{
+    font-family:monospace;
+    color:#94a3b8;
+    margin-bottom:20px;
+    min-height:70px;
+    line-height:1.5;
+}
+
+#timer{
+    text-align:center;
+    font-size:1.1rem;
+    font-weight:bold;
+    color:var(--primary-blue);
+    margin-bottom:15px;
+}
+
+.progress-container{
+    width:100%;
+    height:10px;
+    background:#1e293b;
+    border-radius:20px;
+    overflow:hidden;
+    margin-bottom:25px;
+}
+
+.progress-bar{
+    width:100%;
+    height:100%;
+    background:linear-gradient(90deg,#38bdf8,#22c55e);
+    transition:width 1s linear;
+}
+
+.input-group{
+    margin-bottom:18px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border-radius:10px;
+    border:1px solid #334155;
+    background:var(--input-bg);
+    color:white;
+    font-size:15px;
+    outline:none;
+    transition:0.3s;
+}
+
+input:focus{
+    border-color:var(--primary-blue);
+    box-shadow:0 0 10px rgba(56,189,248,0.4);
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(90deg,#0ea5e9,#22c55e);
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 0 15px rgba(56,189,248,0.4);
+}
+
+button:disabled{
+    opacity:0.5;
+    cursor:not-allowed;
+}
+
+#result{
+    margin-top:25px;
+    padding:18px;
+    border-radius:12px;
+    background:#0f172a;
+    display:none;
+    line-height:1.7;
+    animation:fadeIn .5s ease;
+    border-left:5px solid var(--primary-blue);
+}
+
+.success{
+    border-left-color:var(--success-green)!important;
+}
+
+.error{
+    border-left-color:var(--error-red)!important;
+}
+
+@media(max-width:500px){
+
+    .card{
+        padding:25px;
     }
 
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background:
-            radial-gradient(circle at top, #0f172a 0%, #020617 70%);
-        color: var(--text-main);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        overflow: hidden;
-        padding: 20px;
+    h1{
+        font-size:1.6rem;
     }
 
-    /* Background Glow */
-    body::before {
-        content: "";
-        position: absolute;
-        width: 500px;
-        height: 500px;
-        background: rgba(56, 189, 248, 0.1);
-        filter: blur(120px);
-        border-radius: 50%;
-        top: -100px;
-        right: -100px;
-    }
+}
 
-    .card {
-        position: relative;
-        z-index: 10;
-        width: 100%;
-        max-width: 420px;
-        padding: 35px;
-        border-radius: 20px;
-        background: var(--card-bg);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(56, 189, 248, 0.2);
-        box-shadow:
-            0 0 30px rgba(56, 189, 248, 0.15),
-            0 10px 40px rgba(0, 0, 0, 0.6);
-        animation: fadeIn 0.7s ease;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    h1 {
-        color: var(--primary-blue);
-        text-align: center;
-        margin-bottom: 10px;
-        font-size: 2rem;
-        text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
-    }
-
-    .subtitle {
-        text-align: center;
-        color: #94a3b8;
-        margin-bottom: 25px;
-        line-height: 1.6;
-    }
-
-    #timer {
-        text-align: center;
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: var(--primary-blue);
-        margin-bottom: 20px;
-    }
-
-    .progress-container {
-        width: 100%;
-        height: 10px;
-        background: #1e293b;
-        border-radius: 20px;
-        overflow: hidden;
-        margin-bottom: 25px;
-    }
-
-    .progress-bar {
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-            90deg,
-            #38bdf8,
-            #22c55e
-        );
-        transition: width 1s linear;
-    }
-
-    .input-group {
-        margin-bottom: 18px;
-    }
-
-    input {
-        width: 100%;
-        padding: 14px;
-        border-radius: 10px;
-        border: 1px solid #334155;
-        background: var(--input-bg);
-        color: white;
-        font-size: 15px;
-        outline: none;
-        transition: 0.3s;
-    }
-
-    input:focus {
-        border-color: var(--primary-blue);
-        box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
-    }
-
-    button {
-        width: 100%;
-        padding: 14px;
-        border: none;
-        border-radius: 10px;
-        background: linear-gradient(
-            90deg,
-            #0ea5e9,
-            #22c55e
-        );
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
-    }
-
-    button:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-
-    #result {
-        margin-top: 25px;
-        padding: 18px;
-        border-radius: 12px;
-        background: #0f172a;
-        display: none;
-        line-height: 1.7;
-        border-left: 5px solid var(--primary-blue);
-        animation: fadeIn 0.5s ease;
-    }
-
-    .success {
-        border-left-color: var(--success-green) !important;
-    }
-
-    .error {
-        border-left-color: var(--error-red) !important;
-    }
-
-    .terminal {
-        font-family: monospace;
-        color: #94a3b8;
-        margin-bottom: 20px;
-        min-height: 70px;
-        line-height: 1.5;
-    }
-
-    @media (max-width: 500px) {
-        .card {
-            padding: 25px;
-        }
-
-        h1 {
-            font-size: 1.6rem;
-        }
-    }
 </style>
 </head>
 
@@ -239,9 +232,9 @@
 
     <div class="input-group">
         <input
-            type="number"
+            type="text"
             id="age"
-            placeholder="Enter your age"
+            placeholder="Enter your age manually"
         />
     </div>
 
@@ -255,145 +248,159 @@
 
 <script>
 
-    const startBtn = document.getElementById("startBtn");
-    const timerDiv = document.getElementById("timer");
-    const resultDiv = document.getElementById("result");
-    const progressBar = document.getElementById("progressBar");
-    const terminal = document.getElementById("terminal");
+const startBtn = document.getElementById("startBtn");
+const timerDiv = document.getElementById("timer");
+const resultDiv = document.getElementById("result");
+const progressBar = document.getElementById("progressBar");
+const terminal = document.getElementById("terminal");
 
-    let countdown;
-    let timeLeft = 90;
+let countdown;
+let timeLeft = 90;
 
-    function terminalMessage(message) {
-        terminal.innerHTML += `<br>> ${message}`;
-        terminal.scrollTop = terminal.scrollHeight;
-    }
+function terminalMessage(message){
 
-    function startProcess() {
+    terminal.innerHTML += `<br>> ${message}`;
+    terminal.scrollTop = terminal.scrollHeight;
 
-        clearInterval(countdown);
+}
 
-        resultDiv.style.display = "none";
-        resultDiv.className = "";
+function startProcess(){
 
-        const name = document.getElementById("name").value.trim();
-        const age = document.getElementById("age").value.trim();
+    clearInterval(countdown);
 
-        startBtn.disabled = true;
+    resultDiv.style.display = "none";
+    resultDiv.className = "";
 
-        terminal.innerHTML = "> Initializing secure protocol...";
+    const name = document
+        .getElementById("name")
+        .value
+        .trim();
 
-        setTimeout(() => {
-            terminalMessage("Checking credentials...");
-        }, 500);
+    const age = document
+        .getElementById("age")
+        .value
+        .trim();
 
-        setTimeout(() => {
-            terminalMessage("Verifying engineer identity...");
-        }, 1000);
+    startBtn.disabled = true;
 
-        const startTime = Date.now();
+    terminal.innerHTML =
+        "> Initializing secure protocol...";
 
-        timeLeft = 90;
+    setTimeout(() => {
+        terminalMessage("Checking credentials...");
+    }, 500);
 
-        countdown = setInterval(() => {
+    setTimeout(() => {
+        terminalMessage("Verifying engineer identity...");
+    }, 1000);
 
-            timeLeft--;
+    const startTime = Date.now();
 
-            timerDiv.innerHTML = `⏳ ${timeLeft}s Remaining`;
+    timeLeft = 90;
 
-            progressBar.style.width = (timeLeft / 90) * 100 + "%";
+    countdown = setInterval(() => {
 
-            if (timeLeft <= 0) {
+        timeLeft--;
 
-                clearInterval(countdown);
+        timerDiv.innerHTML =
+            `⏳ ${timeLeft}s Remaining`;
 
-                resultDiv.style.display = "block";
-                resultDiv.classList.add("error");
+        progressBar.style.width =
+            (timeLeft / 90) * 100 + "%";
 
-                resultDiv.innerHTML = `
-                    <strong>❌ ACCESS DENIED</strong><br>
-                    Time expired.
-                `;
-
-                terminalMessage("Authentication timeout.");
-
-                startBtn.disabled = false;
-            }
-
-        }, 1000);
-
-        setTimeout(() => {
+        if(timeLeft <= 0){
 
             clearInterval(countdown);
 
-            const endTime = Date.now();
-
-            const timeTaken =
-                Math.floor((endTime - startTime) / 1000);
-
-            const parsedAge = Number(age);
-
             resultDiv.style.display = "block";
+            resultDiv.classList.add("error");
 
-            if (!name || !age) {
+            resultDiv.innerHTML = `
+                <strong>❌ ACCESS DENIED</strong><br>
+                Time expired.
+            `;
 
-                resultDiv.classList.add("error");
-
-                resultDiv.innerHTML = `
-                    <strong>⚠️ Missing Information</strong><br>
-                    Please complete all fields.
-                `;
-
-                terminalMessage("Input validation failed.");
-
-            }
-            else if (isNaN(parsedAge)) {
-
-                resultDiv.classList.add("error");
-
-                resultDiv.innerHTML = `
-                    <strong>⚠️ Invalid Age</strong><br>
-                    Age must be numeric.
-                `;
-
-                terminalMessage("Age format invalid.");
-
-            }
-            else if (parsedAge < 20) {
-
-                resultDiv.classList.add("error");
-
-                resultDiv.innerHTML = `
-                    <strong>❌ ACCESS DENIED</strong><br>
-                    ${name}, you are too young.
-                `;
-
-                terminalMessage("Age restriction triggered.");
-
-            }
-            else {
-
-                resultDiv.classList.add("success");
-
-                resultDiv.innerHTML = `
-                    <strong>✅ ACCESS GRANTED</strong><br>
-                    Welcome Engineer ${name} 🛠️<br>
-                    Verification Time: ${timeTaken}s
-                `;
-
-                terminalMessage("Authentication successful.");
-            }
-
-            timerDiv.innerHTML = "✅ Process Complete";
-
-            progressBar.style.width = "100%";
+            terminalMessage("Authentication timeout.");
 
             startBtn.disabled = false;
+        }
 
-        }, 3000);
-    }
+    },1000);
 
-    startBtn.addEventListener("click", startProcess);
+    setTimeout(() => {
+
+        clearInterval(countdown);
+
+        const endTime = Date.now();
+
+        const timeTaken =
+            Math.floor((endTime - startTime) / 1000);
+
+        const parsedAge = parseInt(age);
+
+        resultDiv.style.display = "block";
+
+        if(!name || !age){
+
+            resultDiv.classList.add("error");
+
+            resultDiv.innerHTML = `
+                <strong>⚠️ Missing Information</strong><br>
+                Please complete all fields.
+            `;
+
+            terminalMessage("Input validation failed.");
+        }
+
+        else if(isNaN(parsedAge)){
+
+            resultDiv.classList.add("error");
+
+            resultDiv.innerHTML = `
+                <strong>⚠️ Invalid Age</strong><br>
+                Age must contain numbers only.
+            `;
+
+            terminalMessage("Invalid age format.");
+        }
+
+        else if(parsedAge < 20){
+
+            resultDiv.classList.add("error");
+
+            resultDiv.innerHTML = `
+                <strong>❌ ACCESS DENIED</strong><br>
+                ${name}, you are too young.
+            `;
+
+            terminalMessage("Age restriction triggered.");
+        }
+
+        else{
+
+            resultDiv.classList.add("success");
+
+            resultDiv.innerHTML = `
+                <strong>✅ ACCESS GRANTED</strong><br>
+                Welcome Engineer ${name} 🛠️<br>
+                Verification Time: ${timeTaken}s
+            `;
+
+            terminalMessage("Authentication successful.");
+        }
+
+        timerDiv.innerHTML =
+            "✅ Process Complete";
+
+        progressBar.style.width = "100%";
+
+        startBtn.disabled = false;
+
+    },3000);
+
+}
+
+startBtn.addEventListener("click", startProcess);
 
 </script>
 
