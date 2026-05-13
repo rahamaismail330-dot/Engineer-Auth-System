@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Engineer Auth System</title>
 
@@ -88,14 +88,6 @@ h1{
     color:#94a3b8;
     margin-bottom:25px;
     line-height:1.6;
-}
-
-.terminal{
-    font-family:monospace;
-    color:#94a3b8;
-    margin-bottom:20px;
-    min-height:70px;
-    line-height:1.5;
 }
 
 #timer{
@@ -207,12 +199,8 @@ button:disabled{
     <h1>Engineer Auth</h1>
 
     <p class="subtitle">
-        Secure Engineer Verification System
+        Complete verification within 90 seconds
     </p>
-
-    <div class="terminal" id="terminal">
-        > System Ready...
-    </div>
 
     <div id="timer">
         ⏳ 90s Remaining
@@ -252,17 +240,9 @@ const startBtn = document.getElementById("startBtn");
 const timerDiv = document.getElementById("timer");
 const resultDiv = document.getElementById("result");
 const progressBar = document.getElementById("progressBar");
-const terminal = document.getElementById("terminal");
 
 let countdown;
 let timeLeft = 90;
-
-function terminalMessage(message){
-
-    terminal.innerHTML += `<br>> ${message}`;
-    terminal.scrollTop = terminal.scrollHeight;
-
-}
 
 function startProcess(){
 
@@ -283,20 +263,14 @@ function startProcess(){
 
     startBtn.disabled = true;
 
-    terminal.innerHTML =
-        "> Initializing secure protocol...";
-
-    setTimeout(() => {
-        terminalMessage("Checking credentials...");
-    }, 500);
-
-    setTimeout(() => {
-        terminalMessage("Verifying engineer identity...");
-    }, 1000);
-
     const startTime = Date.now();
 
     timeLeft = 90;
+
+    timerDiv.innerHTML =
+        `⏳ ${timeLeft}s Remaining`;
+
+    progressBar.style.width = "100%";
 
     countdown = setInterval(() => {
 
@@ -320,7 +294,8 @@ function startProcess(){
                 Time expired.
             `;
 
-            terminalMessage("Authentication timeout.");
+            timerDiv.innerHTML =
+                "❌ Time Expired";
 
             startBtn.disabled = false;
         }
@@ -348,8 +323,6 @@ function startProcess(){
                 <strong>⚠️ Missing Information</strong><br>
                 Please complete all fields.
             `;
-
-            terminalMessage("Input validation failed.");
         }
 
         else if(isNaN(parsedAge)){
@@ -360,8 +333,6 @@ function startProcess(){
                 <strong>⚠️ Invalid Age</strong><br>
                 Age must contain numbers only.
             `;
-
-            terminalMessage("Invalid age format.");
         }
 
         else if(parsedAge < 20){
@@ -372,8 +343,6 @@ function startProcess(){
                 <strong>❌ ACCESS DENIED</strong><br>
                 ${name}, you are too young.
             `;
-
-            terminalMessage("Age restriction triggered.");
         }
 
         else{
@@ -385,8 +354,6 @@ function startProcess(){
                 Welcome Engineer ${name} 🛠️<br>
                 Verification Time: ${timeTaken}s
             `;
-
-            terminalMessage("Authentication successful.");
         }
 
         timerDiv.innerHTML =
